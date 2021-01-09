@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="main-heading">
+    <h1>Perfect Anime Finder</h1>
+</div>
+
+<div class="my-form">
+    <label>Choose Three Genres</label>
+    <form class="form-group" method="GET" action="/anime-list">
+        <select class="select-menu" name="first-select" >
+            {% for g in genres.keys() %}
+                <option value={{g}}>{{g}}</option>
+            {% endfor %}        
+        </select>
+        <br>
+        <select class="select-menu" name="second-select">
+            {% for g in genres.keys() %}
+                <option value={{g}}>{{g}}</option>
+            {% endfor %}        
+        </select>
+        <br>
+        <select class="select-menu" name="third-select">
+            {% for g in genres.keys() %}
+                <option value={{g}}>{{g}}</option>
+            {% endfor %}        
+        </select>
+        <br>
+        <input class="button" type="submit" value="Search">
+    </form>
+
+</div>
+
+
+
+{% endblock %}

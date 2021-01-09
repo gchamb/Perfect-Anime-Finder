@@ -1,0 +1,160 @@
+.main-heading{
+    text-align: center;
+    color: white;
+    background-color: #620080 ;
+    width: 85%;
+    margin: auto;
+
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+}
+.main-heading h1{
+   padding: 10px;
+   border: 5px solid #EB56FF;
+   border-radius: 5px;
+}
+
+.my-img{
+    position: absolute;
+    background-position-x: center;
+    
+}
+.my-form{
+    text-align: center;
+    margin-top: 100px;
+} 
+.my-form label{
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+}
+
+.select-menu{
+    margin: 25px;
+    padding: 10px;
+    width: 65%;
+    
+}
+
+.button{
+    width: 30%;
+    margin: auto;
+    background-color: #EB56FF;
+    padding: 10px;
+    color: white;
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.list-anime{
+    margin: auto;
+    width: 70%;
+    
+}
+
+.my-links{
+    text-decoration: none;
+}
+
+ul{
+    list-style-type: none;
+    text-align: center;
+    
+}
+
+li{
+    background-color: #EB56FF;
+    float: left;
+    padding: 15px;
+    margin: 15px;
+    border: 3px solid white;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+li img{
+    width:  250px;
+    height: 350px;
+    object-fit: cover;
+    padding-bottom: 5px;
+    border-radius: 10px;
+}
+li figcaption{
+    color: white;
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.detail-heading{
+    background-color: #EB56FF;
+    text-align: center;
+    width: 20%;
+    margin: auto;
+    padding: 20px;
+    border: 3px solid white;
+    border-radius: 15px;
+}
+.detail-heading img{
+    border-radius: 15px;
+}
+.detail-heading figcaption{
+    color: white;
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+.detail-info{
+    background-color: #EB56FF;
+    text-align: center;
+    width: 80%;
+    margin-top: 80px;
+    margin-left: 9%;
+    margin-bottom: 100px;
+    margin-right: 9%;
+    /* margin: auto; */
+    padding: 20px;
+    border: 3px solid white;
+    border-radius: 15px;
+}
+.detail-info h3{
+    text-align: center;
+    color: white;
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.detail-info p{
+    text-align: center;
+    color: black;
+    font-family: Helvetica, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.5em;
+ 
+}
+.detail-info img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.circle a{
+    background-color: white;
+    border-radius: 50px;
+
+}
+
+html{
+    background-image: url('../images/gb.jpg');
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    background-attachment: fixed;
+}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="main-heading">
+    <h1>{{results}} Matches</h1>
+</div>
+<section class="main-section">
+    <div class="list-anime">
+        <ul>
+          {% for i in range(0,animeNames|length) %}
+          <li>
+              <a class="my-links" href="/anime-details{{i}}">
+                <img class="poster"src={{animeImages[i]}}>
+                <figcaption class="poster">{{animeNames[i]}}</figcaption>
+              </a>
+          </li>
+          {% endfor %}
+        </ul>
+  </div>
+
+</section>
+
+{% endblock %}
