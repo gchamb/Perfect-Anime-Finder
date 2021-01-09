@@ -259,42 +259,6 @@ def dated_url_for(endpoint, **values):
 if __name__ == "__main__":
     app.run(debug = True)
 
-# print(referenceDict)
-
-
-# j = Jikan()
-
-# jk = j.genre('anime',1)
-
-# rating = [] 
-# englishName = []
-
-
-# print(jk['anime'][0])
-
-
-# for id in animeIDs:
-#         indivAnimes = j.anime(id=id)
-#         # animeDetails[indivAnimes['url']] = indivAnimes['synopsis'] # URL AND SYNPOSIS KEY = VALUE
-#         # rating.append(indivAnimes['score'])
-#         animeDetails['anime']['name'] = indivAnimes['title_english']
-#         # englishName.append()
-
-# anime = j.anime(id =jk['anime'][0]['mal_id'])
-
-# indivAnimes = j.anime(id=16498)
-# print(indivAnimes['title_english'])
-# print(anime['synopsis'])
-
-"""
-Examples to revelant store data from the JikanAPI 
-
-anime_genres = j.genre(type='anime', genre_id=1)
-print(anime_genres['anime'][0]['title'])
-print(anime_genres['anime'][0]['image_url'])
-print(anime_genres['anime'][0]['genres'][1]['name'])
-"""
-
        
     
 
