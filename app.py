@@ -231,6 +231,7 @@ def animeDetails(id):
     id = int(id)
 
     currentAnime = referenceDict['anime'][id] # Current Name of the Anime
+    print(referenceDict)
     nineAnime = 'https://www12.9anime.to/search?keyword=' # link for searching on 9Anime
     planetAnime = 'https://www.anime-planet.com/anime/all?name=' # link for searching on 9Anime
 
