@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+
+
+{% block body %}
+
+<div class="main-heading">
+    <h1>Anime Details</h1>
+</div>
+
+<div class="detail-heading">
+    <img src={{img}} width="350">
+    <figcaption>{{name}}</figcaption>
+</div>
+
+<div class="detail-info">
+    <h3>Synopsis</h3>
+    <p>{{synopsis}}</p>
+    <h3>Rating</h3>
+    <p>{{rating}}/10</p>
+
+    <h3>Links to Watch </h3>
+    <div class="my-links">
+        <a href={{mal}}>
+            <img src="../static/images/mal.png">
+        </a>
+        <a href={{nineAnime}}>
+            <img src="../static/images/9anime.jpeg">
+        </a>
+        <a href={{planetAnime}}>
+            <img src="../static/images/planetanime.jpg">
+        </a>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
