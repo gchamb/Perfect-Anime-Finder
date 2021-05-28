@@ -22,10 +22,9 @@
                             
 """
 
+from collections import OrderedDict
 from jikanpy import Jikan
 from flask import Flask, render_template, request, url_for, redirect
-import os
-
 
 
 app = Flask(__name__,template_folder="templates")
@@ -77,8 +76,27 @@ genres = {
 }
 
 referenceDict = {
+        "anime":{
 
-}
+        },
+
+        "urls":{
+
+        }
+        ,
+
+        "images":{
+
+        },
+        "synopsis":{
+
+        },
+
+        "rating":{
+
+        }
+        
+    }
 
 
 @app.route('/')
@@ -93,6 +111,7 @@ def displayAnime():
     genre_three = request.args.get("third-select")
 
     # Multiple Words Cut Off
+    # This is to ensure those words get properly placed in the API
     if genre_one == 'Super':
         genre_one = 'Super Power'
     if genre_two == 'Super':
@@ -118,111 +137,80 @@ def displayAnime():
 
     # Declaring local and global variables
     global referenceDict
-    getAnimes = []
-    animeNames=[]
+    animeNames = []
     animeImages = []
-    storeOneTwo = []
+    checkSecond = []
     animeURLs = []
     rating = []
     synopsis = []
-    results = 0
-    animeInfo = {
-        "anime":{
-
-        },
-
-        "urls":{
-
-        }
-        ,
-
-        "images":{
-
-        },
-        "synopsis":{
-
-        },
-
-        "rating":{
-
-        }
-        
-    }
- 
-
-    #  Want 5 pages of the genre to be searched
-    firstPage = jikan.genre(type='anime', genre_id =genres[genre_one],page=1 )
-
-    # Stores the first of the Anime information with the first genre
-    for i in range(0,len(firstPage['anime'])):
-        getAnimes.append(firstPage['anime'][i])  
-
-    # Using try catches to avoid errors due to the different number of animes in a genre
-    try:
-        secondPage = jikan.genre(type='anime', genre_id =genres[genre_one],page=2 )
-        for i in range(0,len(secondPage['anime'])):
-            getAnimes.append(secondPage['anime'][i]) 
-    except:
-        pass
-        
-    try:
-        thirdPage = jikan.genre(type='anime', genre_id =genres[genre_one],page=3 )
-        for i in range(0,len(thirdPage['anime'])):
-            getAnimes.append(thirdPage['anime'][i])  
-    except:
-        pass
+    animes = OrderedDict()
     
+    # I want to check as many pages as I can for the most results
+    # Pages would never make it up to 50 so it will 100% throw an exception 
+    # That means we collect all of the data from the API
     try:
-        fourthPage = jikan.genre(type='anime', genre_id =genres[genre_one],page=4 )
-        for i in range(0,len(fourthPage['anime'])):
-            getAnimes.append(fourthPage['anime'][i])  
+        # Iterate through the pages of myanimelist genres
+        pages = 1
+        while pages<50:
+            pageAnime = jikan.genre(type='anime', genre_id =genres[genre_one],page=pages)  
+            # Stores all of the animes in a variable
+            allAnimes  = pageAnime['anime'] 
+
+            # Iterates through the list 
+            # Stores relevant information into an ordered dictionary
+            for i in allAnimes:
+                # Creates a key
+                animes[i['title']] = i
+                # Stores all of the genres
+                Allgenres = i['genres']
+
+                # Creates another key with value as an ordered dict
+                # Uses this to check if other genres are in this dictionary easily
+                animes[i['title']]['genres'] = OrderedDict() 
+                count = 0
+                # Stores the genres in the dictionary
+                for j in Allgenres:
+                    animes[i['title']]['genres'][count] = j['name']
+                    count+=1
+
+            pages+=1 # new page
     except:
         pass
-    
-    try:
-        fifthPage = jikan.genre(type='anime', genre_id =genres[genre_one],page=5 )
-        for i in range(0,len(fifthPage['anime'])):
-            getAnimes.append(fifthPage['anime'][i])  
-    except:
-        pass
- 
 
-    # Searching for the other 2 Genres to get the match
-    for i in range(0,len(getAnimes)):
-        for j in range(0, len(getAnimes[i]['genres'])):
-            if getAnimes[i]['genres'][j]['name'] == genre_two or getAnimes[i]['genres'][j]['name'] == genre_three  :
-                storeOneTwo.append(getAnimes[i])
-                results+=1
+    # iterating through the keys to check if the other genres are in any animes
+    for key in list(animes.keys()):
+        checkGenres = animes[key]['genres']
+  
+        if genre_two not in checkGenres.values():
+            animes.pop(key, None) # delete the key if it doesnt have those genres
+        if genre_three not in checkGenres.values():
+            animes.pop(key, None) 
+     
+    print(len(animes.keys()))
+    # making the data more managable so it can be easily to implement with jinga notation
+    animeNames = list(animes.keys())
+    results = len(animeNames)
+    for i in range(0,len(animeNames)):
+        animeImages.append(animes[animeNames[i]]['image_url'])
+        animeURLs.append(animes[animeNames[i]]['url'])
+        rating.append(animes[animeNames[i]]['score'])
+        synopsis.append(animes[animeNames[i]]['synopsis'])
 
-    for i in range(0,len(storeOneTwo)):
-            # Keeps everything the same size
-            if len(storeOneTwo[i]['title']) > 25:
-                temp = storeOneTwo[i]['title']
-                shortenedName = temp[0:25]
-                animeNames.append(shortenedName)
-            else:
-                animeNames.append(storeOneTwo[i]['title']) 
-        
-            animeURLs.append(storeOneTwo[i]['url']) # Stores the MyAnimeList URL
-            rating.append(storeOneTwo[i]['score']) # Stores the rating from MyAnimeList
-            animeImages.append(storeOneTwo[i]['image_url'])
-            synopsis.append(storeOneTwo[i]['synopsis'])
-                
+        # Some names are very long so I want them to be shortened
+        if len(animeNames[i]) > 25:
+            temp = animeNames[i]
+            shortenedName = temp[0:25]
+            animeNames[i] = shortenedName
+
     
 
     # Organizes into a dictionary of lists for other app.routes be able to use
-    animeInfo['anime'] = animeNames
-    animeInfo['urls'] = animeURLs
-    animeInfo['images'] = animeImages
-    animeInfo['synopsis'] = synopsis
-    animeInfo['rating'] = rating
-    referenceDict = animeInfo 
-    # References the dictionary so other routes can use the data
-    # Allows me to reference it because if I made the animeInfo global the information would stay with each request
-    # The reference keeps the data new with each request because the animeInfo is a local dictionary  
-
-
-
+    referenceDict['anime'] = animeNames
+    referenceDict['urls'] = animeURLs
+    referenceDict['images'] = animeImages
+    referenceDict['synopsis'] = synopsis
+    referenceDict['rating'] = rating
+ 
     return render_template('animelist.html', animeNames=animeNames,animeImages=animeImages, results=results)
 
 
@@ -231,7 +219,6 @@ def animeDetails(id):
     id = int(id)
 
     currentAnime = referenceDict['anime'][id] # Current Name of the Anime
-    print(referenceDict)
     nineAnime = 'https://www12.9anime.to/search?keyword=' # link for searching on 9Anime
     planetAnime = 'https://www.anime-planet.com/anime/all?name=' # link for searching on 9Anime
 
