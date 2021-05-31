@@ -136,7 +136,6 @@ def displayAnime():
        
 
     # Declaring local and global variables
-    global referenceDict
     animeNames = []
     animeImages = []
     checkSecond = []
@@ -225,6 +224,7 @@ def animeDetails(id):
     nineAnime = nineAnime + currentAnime.replace(' ','+') # replaces the whitespace with pluses and added it to the 9Anime link
     planetAnime = planetAnime + currentAnime.replace(' ', '%20') # replaces the whitespace with %20 and added it to the PlanetAnime link
     mal = referenceDict['urls'][id] # Current Link
+
 
     return render_template("animedetails.html",img=referenceDict['images'][id],name=referenceDict['anime'][id],synopsis=referenceDict['synopsis'][id],rating=referenceDict['rating'][id],mal=mal,nineAnime=nineAnime,planetAnime=planetAnime)
     
